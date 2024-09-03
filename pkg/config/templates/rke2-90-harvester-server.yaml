@@ -4,10 +4,36 @@ service-cidr: 10.53.0.0/16
 cluster-dns: 10.53.0.10
 tls-san:
   - {{ .Vip }}
-{{- with $args :=  .GetKubeletArgs }}
+
+# STIG Requirements
+profile: cis
+use-service-account-credentials: true
+
 kubelet-arg:
+- "protect-kernel-defaults=true"
+- "streaming-connection-idle-timeout=5m"
+{{- with $args :=  .GetKubeletArgs }}
 {{- range $arg := $args }}
 - {{ printf "%q" $arg }}
 {{- end }}
 {{- end }}
+
+kube-controller-manager-arg:
+- "cert-dir=/var/lib/rancher/rke2/server/tls/kube-controller-manager"
+- "secure-port=10257"
+- "tls-min-version=VersionTLS12"
+- "tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+
+kube-scheduler-arg:
+- "tls-min-version=VersionTLS12"
+- "tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+
+kube-apiserver-arg:
+- "tls-min-version=VersionTLS12"
+- "tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+- "authorization-mode=RBAC,Node"
+- "anonymous-auth=false"
+- "audit-log-mode=blocking-strict"
+
 audit-policy-file: /etc/rancher/rke2/config.yaml.d/92-harvester-kube-audit-policy.yaml
+pod-security-admission-config-file: /etc/rancher/rke2/config.yaml.d/51-rke2-pss-custom.yaml

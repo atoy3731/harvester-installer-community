@@ -4,11 +4,11 @@ omitStages:
   - "ResponseStarted"
   - "ResponseComplete"
 rules:
-  # Any include/exclude rules are added here
-
-  # A catch-all rule to log all other (create/delete/patch) requests at the Metadata level
-  - level: Metadata
-    verbs: ["create", "delete", "patch"]
-    omitStages:
-      - "ResponseStarted"
-      - "ResponseComplete"
+- level: Metadata
+  resources:
+  - group: ""
+    resources: ["secrets"]
+- level: RequestResponse
+  resources:
+  - group: ""
+    resources: ["*"]

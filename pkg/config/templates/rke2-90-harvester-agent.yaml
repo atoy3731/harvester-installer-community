@@ -1,5 +1,10 @@
-{{- with $args :=  .GetKubeletArgs }}
+# STIG Requirements
+profile: cis
+
 kubelet-arg:
+- "protect-kernel-defaults=true"
+- "streaming-connection-idle-timeout=5m"
+{{- with $args :=  .GetKubeletArgs }}
 {{- range $arg := $args }}
 - {{ printf "%q" $arg }}
 {{- end }}
