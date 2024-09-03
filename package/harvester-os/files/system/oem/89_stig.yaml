@@ -6,6 +6,15 @@ stages:
             - useradd -r -c "etcd user" -G etcd -s /sbin/nologin -M etcd
             - sysctl -p
           files:
+            - path: /etc/sysctl.d/99-sysctl.conf
+              permissions: 600
+              owner: 0
+              group: 0
+              content: |
+                vm.panic_on_oom=0
+                vm.overcommit_memory=1
+                kernel.panic=10
+                kernel.panic_on_oops=1
             - path: /etc/rancher/rke2/config.yaml.d/51-rke2-pss-custom.yaml
               permissions: 600
               owner: 0
