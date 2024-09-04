@@ -19,10 +19,10 @@ kubelet-arg:
 {{- end }}
 {{- end }}
 
-# kube-controller-manager-arg:
-# - "cert-dir=/var/lib/rancher/rke2/server/tls/kube-controller-manager"
-# - "secure-port=10257"
-# - "tls-min-version=VersionTLS13"
+kube-controller-manager-arg:
+- "cert-dir=/var/lib/rancher/rke2/server/tls/kube-controller-manager"
+- "secure-port=10257"
+- "tls-min-version=VersionTLS13"
 
 # kube-scheduler-arg:
 # - "tls-min-version=VersionTLS13"
