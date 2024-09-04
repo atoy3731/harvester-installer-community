@@ -24,7 +24,7 @@ kube-controller-manager-arg:
 - "tls-min-version=VersionTLS13"
 
 kube-scheduler-arg:
-- "tls-min-version=VersionTLS12"
+- "tls-min-version=VersionTLS11"
 
 kube-apiserver-arg:
 - "tls-min-version=VersionTLS13"
