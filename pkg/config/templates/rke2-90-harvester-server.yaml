@@ -27,11 +27,11 @@ kubelet-arg:
 # kube-scheduler-arg:
 # - "tls-min-version=VersionTLS13"
 
-# kube-apiserver-arg:
-# - "tls-min-version=VersionTLS13"
-# - "authorization-mode=RBAC,Node"
-# - "anonymous-auth=false"
-# - "audit-log-mode=blocking-strict"
+kube-apiserver-arg:
+- "tls-min-version=VersionTLS13"
+- "authorization-mode=RBAC,Node"
+- "anonymous-auth=false"
+- "audit-log-mode=blocking-strict"
 
 audit-policy-file: /etc/rancher/rke2/config.yaml.d/92-harvester-kube-audit-policy.yaml
 pod-security-admission-config-file: /etc/rancher/rke2/config.yaml.d/51-rke2-pss-custom.yaml
