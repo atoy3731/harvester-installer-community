@@ -9,11 +9,10 @@ tls-san:
 profile: cis
 use-service-account-credentials: true
 
-# kubelet-arg:
-# - "protect-kernel-defaults=true"
-# - "streaming-connection-idle-timeout=5m"
-{{- with $args := .GetKubeletArgs }}
 kubelet-arg:
+- "protect-kernel-defaults=true"
+- "streaming-connection-idle-timeout=5m"
+{{- with $args := .GetKubeletArgs }}
 {{- range $arg := $args }}
 - {{ printf "%q" $arg }}
 {{- end }}
