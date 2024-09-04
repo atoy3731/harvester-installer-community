@@ -23,8 +23,8 @@ kube-controller-manager-arg:
 - "secure-port=10257"
 - "tls-min-version=VersionTLS13"
 
-# kube-scheduler-arg:
-# - "tls-min-version=VersionTLS13"
+kube-scheduler-arg:
+- "tls-min-version=VersionTLS12"
 
 kube-apiserver-arg:
 - "tls-min-version=VersionTLS13"
